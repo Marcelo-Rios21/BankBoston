@@ -1,0 +1,27 @@
+# Archivos de compilación Java
+*.class
+
+# Directorios de compilación comunes
+/bin/
+/build/
+/out/
+/target/
+
+# Archivos de IDEs (como VS Code, IntelliJ, Eclipse)
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode/
+.project
+.classpath
+.settings/
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de log o temporales
+*.log
+*.tmp
+*.swp
