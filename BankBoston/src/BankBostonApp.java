@@ -49,7 +49,7 @@ public class BankBostonApp {
     public static boolean ejecutarOpcion(Scanner input, BancoClientes bancoClientes, int opcion) {
         switch (opcion) {
             case 1:
-                System.out.println("1. Registrar cliente");
+                registrarCliente(input, bancoClientes);
                 break;
             case 2:
                 System.out.println("2. Ver datos de cliente");
@@ -68,5 +68,51 @@ public class BankBostonApp {
                 return true;
         }
         return false;
+    }
+
+        public static void registrarCliente(Scanner input, BancoClientes bancoClientes) {   
+            try {
+                System.out.println("Ingrese su RUT (debe tener entre 11 y 12 caracteres, incluyendo puntos y guion): ");
+                String rut = input.nextLine();
+
+                System.out.println("Ingrese nombre: ");
+                String nombre = input.nextLine();
+
+                System.out.println("Ingrese apellido paterno: ");
+                String apellidoPaterno = input.nextLine();
+
+                System.out.println("Ingrese apellido materno: ");
+                String apellidoMaterno = input.nextLine();
+
+                System.out.println("Ingrese domicilio: ");
+                String domicilio = input.nextLine();
+
+                System.out.println("Ingrese comuna: ");
+                String comuna = input.nextLine();
+
+                System.out.println("Ingrese telefono: ");
+                String telefono = input.nextLine();
+
+                String numeroCuenta = generarNumeroCuenta();
+                System.out.println("Numero de cuenta generado: " + numeroCuenta);
+
+                CuentaBancaria cuenta = new CuentaBancaria(numeroCuenta);
+                Cliente cliente = new Cliente(
+                    apellidoMaterno, apellidoPaterno, domicilio, comuna, cuenta, nombre, rut, telefono, numeroCuenta
+                );
+
+                bancoClientes.registrarCliente(cliente);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error al registrar cliente: " + e.getMessage());
+            }
+        }
+
+    public static String generarNumeroCuenta() {
+        StringBuilder numero = new StringBuilder();
+        for (int i = 0; i < 9; i++) {
+            int digito = (int)(Math.random() * 10); 
+            numero.append(digito);
+        }
+        return numero.toString();
     }
 }
