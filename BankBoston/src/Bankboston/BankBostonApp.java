@@ -1,4 +1,4 @@
-
+package Bankboston;
 import java.util.Scanner;
 
 public class BankBostonApp {
@@ -72,37 +72,72 @@ public class BankBostonApp {
         return false;
     }
 
-    public static void registrarCliente(Scanner input, BancoClientes bancoClientes) {   
-        try {
+    public static void registrarCliente(Scanner input, BancoClientes bancoClientes) {  
+        String rut; 
+        while (true) {
             System.out.println("Ingrese su RUT (debe tener entre 11 y 12 caracteres, incluyendo puntos y guion): ");
-            String rut = input.nextLine();
+            rut = input.nextLine();
+            if (rut.length() >= 11 && rut.length() <= 12) break;
+            System.out.println("RUT invalido. Intente nuevamente.");
+        }
 
+        String nombre;
+        while (true) {
             System.out.println("Ingrese nombre: ");
-            String nombre = input.nextLine();
+            nombre = input.nextLine();
+            if (!nombre.isBlank()) break;
+            System.out.println("El nombre no puede estar vacio.");
+        }
 
+        String apellidoPaterno;
+        while (true) {
             System.out.println("Ingrese apellido paterno: ");
-            String apellidoPaterno = input.nextLine();
-
+            apellidoPaterno = input.nextLine();
+            if (!apellidoPaterno.isBlank()) break;
+            System.out.println("El apellido paterno no puede estar vacio.");
+        }
+            
+        String apellidoMaterno;
+        while (true) {
             System.out.println("Ingrese apellido materno: ");
-            String apellidoMaterno = input.nextLine();
-
+            apellidoMaterno = input.nextLine();
+            if (!apellidoMaterno.isBlank()) break;
+            System.out.println("El apellido materno no puede estar vacio.");
+        }
+            
+        String domicilio;
+        while (true) {
             System.out.println("Ingrese domicilio: ");
-            String domicilio = input.nextLine();
-
+            domicilio = input.nextLine();
+            if (!domicilio.isBlank()) break;
+            System.out.println("El domicilio no puede estar vacio.");
+        }
+            
+        String comuna;
+        while (true) {
             System.out.println("Ingrese comuna: ");
-            String comuna = input.nextLine();
-
+            comuna = input.nextLine();
+            if (!comuna.isBlank()) break;
+            System.out.println("El comuna no puede estar vacio.");
+        }
+            
+        String telefono;
+        while (true) {
             System.out.println("Ingrese telefono: ");
-            String telefono = input.nextLine();
+            telefono = input.nextLine();
+            if (!telefono.isBlank()) break;
+            System.out.println("El telefono no puede estar vacio.");
+        }
+            
 
             String numeroCuenta = generarNumeroCuenta();
             System.out.println("Numero de cuenta generado: " + numeroCuenta);
 
+        try {
             CuentaBancaria cuenta = new CuentaBancaria(numeroCuenta);
             Cliente cliente = new Cliente(
                 apellidoMaterno, apellidoPaterno, domicilio, comuna, cuenta, nombre, rut, telefono, numeroCuenta
             );
-
             bancoClientes.registrarCliente(cliente);
         } catch (IllegalArgumentException e) {
             System.out.println("Error al registrar cliente: " + e.getMessage());
@@ -119,58 +154,70 @@ public class BankBostonApp {
     }
 
     public static void depositar(Scanner input, BancoClientes bancoClientes) {
-        System.out.println("Ingrese el RUT del cliente: ");
-        String rut = input.nextLine();
+        Cliente cliente;
+        while(true) {
+            System.out.println("Ingrese el RUT del cliente: ");
+            String rut = input.nextLine();
+            cliente = bancoClientes.buscarClientePorRut(rut);
 
-        Cliente cliente = bancoClientes.buscarClientePorRut(rut);
-
-        if (cliente == null) {
-            System.out.println("No se encontró ningun cliente con ese RUT.");
-            return;
+            if (cliente != null) break;
+            System.out.println("No se encontró ningun cliente con ese RUT. Intente nuevamente.");
         }
-        System.out.println("Ingrese el monto a depositar: ");
-        int monto = 0;
-
-        try {
-            monto = Integer.parseInt(input.nextLine());
-        } catch (NumberFormatException e) {
-            System.out.println("Debe ingresar un numero valido.");
-            return;
+        
+        int monto;
+        while(true) {
+            System.out.println("Ingrese el monto a depositar: ");
+            try {
+                monto = Integer.parseInt(input.nextLine());
+                if (monto > 0) break;
+                System.out.println("El monto debe ser mayor a cero");
+            } catch (NumberFormatException e) {
+                System.out.println("Debe ingresar un numero valido.");
+            }
         }
         BancoOperaciones.depositarEnCuenta(cliente, monto);
     }
 
     public static void girar(Scanner input, BancoClientes bancoClientes) {
-        System.out.println("Ingrese el RUT del cliente: ");
-        String rut = input.nextLine();
+        Cliente cliente;
+        while(true) {
+            System.out.println("Ingrese el RUT del cliente: ");
+            String rut = input.nextLine();
+            cliente = bancoClientes.buscarClientePorRut(rut);
 
-        Cliente cliente = bancoClientes.buscarClientePorRut(rut);
-
-        if (cliente == null) {
-            System.out.println("No se encontró ningun cliente con ese RUT.");
-            return;
+            if (cliente != null) break;
+            System.out.println("No se encontró ningun cliente con ese RUT. Intente nuevamente.");
         }
-        System.out.println("Ingrese el monto a girar: ");
-        int monto = 0;
+
+        int monto;
         
-        try {
-            monto = Integer.parseInt(input.nextLine());
-        } catch (NumberFormatException e) {
-            System.out.println("Debe ingresar un numero valido.");
-            return;
+        while(true) {
+            System.out.println("Ingrese el monto a girar: ");
+            try {
+                monto = Integer.parseInt(input.nextLine());
+                if (monto <= 0) {
+                    System.out.println("El monto debe ser mayor a cero");
+                } else if (monto > cliente.getCuenta().getSaldo()) {
+                    System.out.println("Fondos insuficientes. Su saldo actual es: " + cliente.getCuenta().getSaldo() + " pesos.");
+                } else {
+                    break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Debe ingresar un numero valido.");
+            }
         }
         BancoOperaciones.girarDesdeCuenta(cliente, monto);
     }
 
     public static void consultarSaldo(Scanner input, BancoClientes bancoClientes) {
-        System.out.println("Ingrese el RUT del cliente: ");
-        String rut = input.nextLine();
+        Cliente cliente;
+        while(true) {
+            System.out.println("Ingrese el RUT del cliente: ");
+            String rut = input.nextLine();
+            cliente = bancoClientes.buscarClientePorRut(rut);
 
-        Cliente cliente = bancoClientes.buscarClientePorRut(rut);
-
-        if (cliente == null) {
-            System.out.println("No se encontró ningun cliente con ese RUT.");
-            return;
+            if (cliente != null) break;
+            System.out.println("No se encontró ningun cliente con ese RUT. Intente nuevamente.");
         }
         BancoOperaciones.consultarSaldo(cliente);
     }

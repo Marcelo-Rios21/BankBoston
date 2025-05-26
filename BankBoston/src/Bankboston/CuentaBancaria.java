@@ -1,3 +1,4 @@
+package Bankboston;
 public class CuentaBancaria {
     private String numeroCuenta;
     private int saldo;

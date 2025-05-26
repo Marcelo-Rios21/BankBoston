@@ -1,3 +1,4 @@
+package Bankboston;
 public class Cliente {
    private  String rut;
    private String nombre;
