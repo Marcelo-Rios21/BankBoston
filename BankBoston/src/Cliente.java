@@ -92,7 +92,4 @@ public class Cliente {
     public void setCuenta(CuentaBancaria cuenta) {
         this.cuenta = cuenta;
     }
-    
-
-
 }
