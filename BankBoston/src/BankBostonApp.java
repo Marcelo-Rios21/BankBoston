@@ -17,7 +17,7 @@ public class BankBostonApp {
             int opcion = pedirOpcion(input);
 
             if (opcion >= 1 && opcion <= 6) {
-                
+                salir = ejecutarOpcion(input, bancoClientes, opcion);
             } else {
                 System.out.println("Opcion invalida. Debe ser un numero entre 1 y 6.");
             }
@@ -52,16 +52,18 @@ public class BankBostonApp {
                 registrarCliente(input, bancoClientes);
                 break;
             case 2:
-                System.out.println("2. Ver datos de cliente");
+                System.out.println("Ingrese el RUT del cliente: ");
+                String rut = input.nextLine();
+                bancoClientes.verDatosCliente(rut);
                 break;
             case 3:
-                System.out.println("3. Depositar");
+                depositar(input, bancoClientes);
                 break;
             case 4:
-                System.out.println("4. Girar");
+                girar(input, bancoClientes);
                 break;
             case 5:
-                System.out.println("5. Consultar saldo");
+                consultarSaldo(input, bancoClientes);
                 break;
             case 6:
                 System.out.println("Gracias por usar Bank Boston!");
@@ -70,42 +72,42 @@ public class BankBostonApp {
         return false;
     }
 
-        public static void registrarCliente(Scanner input, BancoClientes bancoClientes) {   
-            try {
-                System.out.println("Ingrese su RUT (debe tener entre 11 y 12 caracteres, incluyendo puntos y guion): ");
-                String rut = input.nextLine();
+    public static void registrarCliente(Scanner input, BancoClientes bancoClientes) {   
+        try {
+            System.out.println("Ingrese su RUT (debe tener entre 11 y 12 caracteres, incluyendo puntos y guion): ");
+            String rut = input.nextLine();
 
-                System.out.println("Ingrese nombre: ");
-                String nombre = input.nextLine();
+            System.out.println("Ingrese nombre: ");
+            String nombre = input.nextLine();
 
-                System.out.println("Ingrese apellido paterno: ");
-                String apellidoPaterno = input.nextLine();
+            System.out.println("Ingrese apellido paterno: ");
+            String apellidoPaterno = input.nextLine();
 
-                System.out.println("Ingrese apellido materno: ");
-                String apellidoMaterno = input.nextLine();
+            System.out.println("Ingrese apellido materno: ");
+            String apellidoMaterno = input.nextLine();
 
-                System.out.println("Ingrese domicilio: ");
-                String domicilio = input.nextLine();
+            System.out.println("Ingrese domicilio: ");
+            String domicilio = input.nextLine();
 
-                System.out.println("Ingrese comuna: ");
-                String comuna = input.nextLine();
+            System.out.println("Ingrese comuna: ");
+            String comuna = input.nextLine();
 
-                System.out.println("Ingrese telefono: ");
-                String telefono = input.nextLine();
+            System.out.println("Ingrese telefono: ");
+            String telefono = input.nextLine();
 
-                String numeroCuenta = generarNumeroCuenta();
-                System.out.println("Numero de cuenta generado: " + numeroCuenta);
+            String numeroCuenta = generarNumeroCuenta();
+            System.out.println("Numero de cuenta generado: " + numeroCuenta);
 
-                CuentaBancaria cuenta = new CuentaBancaria(numeroCuenta);
-                Cliente cliente = new Cliente(
-                    apellidoMaterno, apellidoPaterno, domicilio, comuna, cuenta, nombre, rut, telefono, numeroCuenta
-                );
+            CuentaBancaria cuenta = new CuentaBancaria(numeroCuenta);
+            Cliente cliente = new Cliente(
+                apellidoMaterno, apellidoPaterno, domicilio, comuna, cuenta, nombre, rut, telefono, numeroCuenta
+            );
 
-                bancoClientes.registrarCliente(cliente);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Error al registrar cliente: " + e.getMessage());
-            }
+            bancoClientes.registrarCliente(cliente);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error al registrar cliente: " + e.getMessage());
         }
+    }
 
     public static String generarNumeroCuenta() {
         StringBuilder numero = new StringBuilder();
@@ -114,5 +116,62 @@ public class BankBostonApp {
             numero.append(digito);
         }
         return numero.toString();
+    }
+
+    public static void depositar(Scanner input, BancoClientes bancoClientes) {
+        System.out.println("Ingrese el RUT del cliente: ");
+        String rut = input.nextLine();
+
+        Cliente cliente = bancoClientes.buscarClientePorRut(rut);
+
+        if (cliente == null) {
+            System.out.println("No se encontró ningun cliente con ese RUT.");
+            return;
+        }
+        System.out.println("Ingrese el monto a depositar: ");
+        int monto = 0;
+
+        try {
+            monto = Integer.parseInt(input.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Debe ingresar un numero valido.");
+            return;
+        }
+        BancoOperaciones.depositarEnCuenta(cliente, monto);
+    }
+
+    public static void girar(Scanner input, BancoClientes bancoClientes) {
+        System.out.println("Ingrese el RUT del cliente: ");
+        String rut = input.nextLine();
+
+        Cliente cliente = bancoClientes.buscarClientePorRut(rut);
+
+        if (cliente == null) {
+            System.out.println("No se encontró ningun cliente con ese RUT.");
+            return;
+        }
+        System.out.println("Ingrese el monto a girar: ");
+        int monto = 0;
+        
+        try {
+            monto = Integer.parseInt(input.nextLine());
+        } catch (NumberFormatException e) {
+            System.out.println("Debe ingresar un numero valido.");
+            return;
+        }
+        BancoOperaciones.girarDesdeCuenta(cliente, monto);
+    }
+
+    public static void consultarSaldo(Scanner input, BancoClientes bancoClientes) {
+        System.out.println("Ingrese el RUT del cliente: ");
+        String rut = input.nextLine();
+
+        Cliente cliente = bancoClientes.buscarClientePorRut(rut);
+
+        if (cliente == null) {
+            System.out.println("No se encontró ningun cliente con ese RUT.");
+            return;
+        }
+        BancoOperaciones.consultarSaldo(cliente);
     }
 }
