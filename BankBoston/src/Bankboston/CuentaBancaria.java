@@ -1,14 +1,27 @@
 package Bankboston;
-public class CuentaBancaria {
-    private String numeroCuenta;
-    private int saldo;
+public abstract class CuentaBancaria {
+    protected String numeroCuenta;
+    protected int saldo;
 
+    //CONSTRUCTOR 1
     public CuentaBancaria(String numeroCuenta) {
         if (numeroCuenta == null || !numeroCuenta.matches("\\d{9}")) {
             throw new IllegalArgumentException("El numero de cuenta debe tener exactamente 9 digitos");
         }
         this.numeroCuenta = numeroCuenta;
         this.saldo = 0;
+    }
+
+    //CONSTRUCTOR 2
+    public CuentaBancaria(String numeroCuenta, int saldoInicial) {
+        if (numeroCuenta == null || !numeroCuenta.matches("\\d{9}")) {
+            throw new IllegalArgumentException("El numero de cuenta debe tener exactamente 9 digitos");
+        }
+        if (saldoInicial < 0) {
+            throw new IllegalArgumentException("El saldo inicial no puede ser negativo");
+        }
+        this.numeroCuenta = numeroCuenta;
+        this.saldo = saldoInicial;
     }
 
     public void depositar(int monto){
@@ -34,6 +47,8 @@ public class CuentaBancaria {
         System.out.println("Giro exitoso!");
         System.out.println("Saldo: " + saldo + " pesos.");
     }
+
+    public abstract void reporte();
 
 
     //GETTERS Y SETTERS

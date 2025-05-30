@@ -134,7 +134,7 @@ public class BankBostonApp {
             System.out.println("Numero de cuenta generado: " + numeroCuenta);
 
         try {
-            CuentaBancaria cuenta = new CuentaBancaria(numeroCuenta);
+            CuentaBancaria cuenta = new CuentaCorriente(numeroCuenta);
             Cliente cliente = new Cliente(
                 apellidoMaterno, apellidoPaterno, domicilio, comuna, cuenta, nombre, rut, telefono, numeroCuenta
             );

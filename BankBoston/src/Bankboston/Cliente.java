@@ -1,5 +1,5 @@
 package Bankboston;
-public class Cliente {
+public class Cliente implements InformacionCliente{
    private  String rut;
    private String nombre;
    private String apellidoPaterno; 
@@ -19,7 +19,7 @@ public class Cliente {
         this.apellidoPaterno = apellidoPaterno;
         this.domicilio = domicilio;
         this.comuna = comuna;
-        this.cuenta = new CuentaBancaria(numeroCuenta);
+        this.cuenta = cuenta;
         this.nombre = nombre;
         this.rut = rut;
         this.telefono = telefono;
@@ -35,6 +35,11 @@ public class Cliente {
         System.out.println("Telefono: " + telefono);
         System.out.println("Cuenta corriente: " + cuenta.getNumeroCuenta());
         System.out.println("Saldo: " + cuenta.getSaldo() + " pesos.");
+    }
+
+    @Override
+    public void mostrarInformacion(){
+        mostrarDatos();
     }
 
     //GETTERS Y SETTERS
