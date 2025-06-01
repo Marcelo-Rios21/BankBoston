@@ -16,10 +16,10 @@ public class BankBostonApp {
             mostrarMenu();
             int opcion = pedirOpcion(input);
 
-            if (opcion >= 1 && opcion <= 6) {
+            if (opcion >= 1 && opcion <= 7) {
                 salir = ejecutarOpcion(input, bancoClientes, opcion);
             } else {
-                System.out.println("Opcion invalida. Debe ser un numero entre 1 y 6.");
+                System.out.println("Opcion invalida. Debe ser un numero entre 1 y 7.");
             }
         }
     }
@@ -31,9 +31,11 @@ public class BankBostonApp {
         System.out.println("3. Depositar");
         System.out.println("4. Girar");
         System.out.println("5. Consultar saldo");
-        System.out.println("6. Salir");
+        System.out.println("6. Reporte de cuenta");
+        System.out.println("7. Salir");
         System.out.println("Seleccione una opcion: ");
     }
+
 
     public static int pedirOpcion(Scanner input) {
         int opcion = -1;
@@ -65,7 +67,9 @@ public class BankBostonApp {
             case 5:
                 consultarSaldo(input, bancoClientes);
                 break;
-            case 6:
+            case 6: 
+                System.out.println("wip");
+            case 7:
                 System.out.println("Gracias por usar Bank Boston!");
                 return true;
         }
@@ -128,13 +132,39 @@ public class BankBostonApp {
             if (!telefono.isBlank()) break;
             System.out.println("El telefono no puede estar vacio.");
         }
-            
+        
+        int opcionCuenta = -1;
 
-            String numeroCuenta = generarNumeroCuenta();
-            System.out.println("Numero de cuenta generado: " + numeroCuenta);
+            while (true) { 
+                System.out.println("Ingrese tipo de cuenta deseado: ");
+                System.out.println("1. cuenta corriente");
+                System.out.println("2. cuenta ahorro");
+                System.out.println("3. cuenta de credito");
+                try {
+                    opcionCuenta = Integer.parseInt(input.nextLine());
+                    if (opcionCuenta >= 1 && opcionCuenta <= 3) break;
+                    System.out.println("Debe ingresar un numero valido entre 1 y 3.");
+                } catch (NumberFormatException e) {
+                    System.out.println("Debe ingresar un numero valido");
+                }
+            }
+                String numeroCuenta = generarNumeroCuenta();
+                System.out.println("Numero de cuenta generado: " + numeroCuenta);
+            CuentaBancaria cuenta = null;
+            switch (opcionCuenta) {
+                case 1:
+                    cuenta = new CuentaCorriente(numeroCuenta);
+                    break;
+
+                case 2:
+                   cuenta = new CuentaAhorro(numeroCuenta);
+                    break;
+                case 3:
+                    cuenta = new CuentaCredito(numeroCuenta);
+                      break;
+            }
 
         try {
-            CuentaBancaria cuenta = new CuentaCorriente(numeroCuenta);
             Cliente cliente = new Cliente(
                 apellidoMaterno, apellidoPaterno, domicilio, comuna, cuenta, nombre, rut, telefono, numeroCuenta
             );
