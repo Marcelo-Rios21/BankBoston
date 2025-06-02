@@ -33,7 +33,19 @@ public class Cliente implements InformacionCliente{
         System.out.println("Domicilio: " + domicilio);
         System.out.println("Comuna: " + comuna);
         System.out.println("Telefono: " + telefono);
-        System.out.println("Cuenta corriente: " + cuenta.getNumeroCuenta());
+
+        String tipoCuenta;
+        if (cuenta instanceof CuentaCorriente) {
+            tipoCuenta = "Cuenta corriente";
+        } else if (cuenta instanceof CuentaAhorro) {
+            tipoCuenta = "Cuenta ahorro";
+        } else if (cuenta instanceof CuentaCredito) {
+            tipoCuenta = "Cuenta de credito";
+        } else {
+            tipoCuenta = " otro Tipo de cuenta";
+        }
+
+        System.out.println(tipoCuenta + ": " + cuenta.getNumeroCuenta());
         System.out.println("Saldo: " + cuenta.getSaldo() + " pesos.");
     }
 
