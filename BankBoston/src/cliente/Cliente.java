@@ -1,4 +1,10 @@
-package Bankboston;
+package cliente;
+import bankboston.InformacionCliente;
+import cuentas.CuentaAhorro;
+import cuentas.CuentaBancaria;
+import cuentas.CuentaCorriente;
+import cuentas.CuentaCredito;
+
 public class Cliente implements InformacionCliente{
    private  String rut;
    private String nombre;

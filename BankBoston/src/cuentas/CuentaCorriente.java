@@ -1,4 +1,4 @@
-package Bankboston;
+package cuentas;
 
 public class CuentaCorriente extends CuentaBancaria {
     public CuentaCorriente(String numeroCuenta) {

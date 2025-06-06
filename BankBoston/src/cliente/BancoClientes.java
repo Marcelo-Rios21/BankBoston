@@ -1,4 +1,4 @@
-package Bankboston;
+package cliente;
 import java.util.ArrayList;
 
 public class BancoClientes {

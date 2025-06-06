@@ -1,4 +1,11 @@
-package Bankboston;
+package bankboston;
+import cliente.Cliente;
+import cliente.BancoClientes;
+import sistema.BancoOperaciones;
+import cuentas.CuentaAhorro;
+import cuentas.CuentaCorriente;
+import cuentas.CuentaBancaria;
+import cuentas.CuentaCredito;
 import java.util.Scanner;
 
 public class BankBostonApp {

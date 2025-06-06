@@ -1,4 +1,4 @@
-package Bankboston;
+package cuentas;
 
 public class CuentaCredito extends CuentaBancaria {
     private static final int LIMITE_CREDITO = 100000;

@@ -1,4 +1,6 @@
-package Bankboston;
+package sistema;
+import cliente.Cliente;
+
 public class BancoOperaciones {
     
     public static void depositarEnCuenta(Cliente cliente, int monto) {

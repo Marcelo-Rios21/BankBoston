@@ -1,4 +1,4 @@
-package Bankboston;
+package cuentas;
 public abstract class CuentaBancaria {
     protected String numeroCuenta;
     protected int saldo;
