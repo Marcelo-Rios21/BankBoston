@@ -50,6 +50,8 @@ public abstract class CuentaBancaria {
 
     public abstract void reporte();
 
+    public abstract double calcularInteres();
+
 
     //GETTERS Y SETTERS
     public String getNumeroCuenta() {

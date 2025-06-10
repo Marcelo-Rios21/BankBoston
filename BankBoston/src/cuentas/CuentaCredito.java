@@ -34,4 +34,13 @@ public class CuentaCredito extends CuentaBancaria {
         System.out.println("Saldo: " + saldo + " pesos.");
         System.out.println("Credito disponible: " + (LIMITE_CREDITO + saldo) + " pesos.");
     }
+
+    public double calcularInteres() {
+        return saldo * -0.02;
+    }
+
+    public void simularInteres() {
+        double interes = calcularInteres();
+        System.out.println("Si se aplicara interes, perderias: " + interes + " pesos");    
+    }
 }

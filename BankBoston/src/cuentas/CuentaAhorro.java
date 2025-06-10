@@ -14,4 +14,13 @@ public class CuentaAhorro extends CuentaBancaria{
         System.out.println("Cuenta de ahorro: Ideal para tu dinero a largo plazo!!.");
         System.out.println("Saldo: " + saldo + " pesos.");
     }
+
+    public double calcularInteres() {
+        return saldo *0.015;        
+    }
+
+    public void simularInteres() {
+        double interes = calcularInteres();
+        System.out.println("Si se aplicara interes, ganarias: " + interes + " pesos");    
+    }
 }

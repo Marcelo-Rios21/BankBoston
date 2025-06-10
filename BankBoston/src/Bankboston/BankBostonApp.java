@@ -1,12 +1,12 @@
 package bankboston;
-import cliente.Cliente;
 import cliente.BancoClientes;
-import sistema.BancoOperaciones;
+import cliente.Cliente;
 import cuentas.CuentaAhorro;
-import cuentas.CuentaCorriente;
 import cuentas.CuentaBancaria;
+import cuentas.CuentaCorriente;
 import cuentas.CuentaCredito;
 import java.util.Scanner;
+import sistema.BancoOperaciones;
 
 public class BankBostonApp {
     public static void main(String[] args) {
@@ -23,10 +23,10 @@ public class BankBostonApp {
             mostrarMenu();
             int opcion = pedirOpcion(input);
 
-            if (opcion >= 1 && opcion <= 7) {
+            if (opcion >= 1 && opcion <= 8) {
                 salir = ejecutarOpcion(input, bancoClientes, opcion);
             } else {
-                System.out.println("Opcion invalida. Debe ser un numero entre 1 y 7.");
+                System.out.println("Opcion invalida. Debe ser un numero entre 1 y 8.");
             }
         }
     }
@@ -39,7 +39,8 @@ public class BankBostonApp {
         System.out.println("4. Girar");
         System.out.println("5. Consultar saldo");
         System.out.println("6. Reporte de cuenta");
-        System.out.println("7. Salir");
+        System.out.println("7. Simular intereses");
+        System.out.println("8. Salir ");
         System.out.println("Seleccione una opcion: ");
     }
 
@@ -83,6 +84,9 @@ public class BankBostonApp {
                 }
                 break;
             case 7:
+                simularIntereses(input, bancoClientes);
+                break;
+            case 8:
                 System.out.println("Gracias por usar Bank Boston!");
                 return true;
         }
@@ -265,4 +269,25 @@ public class BankBostonApp {
         }
         BancoOperaciones.consultarSaldo(cliente);
     }
+
+    public static void simularIntereses(Scanner input, BancoClientes bancoClientes) {
+    System.out.println("Ingrese el RUT del cliente: ");
+    String rut = input.nextLine();
+    Cliente cliente = bancoClientes.buscarClientePorRut(rut);
+
+    if (cliente == null) {
+        System.out.println("Cliente no encontrado.");
+        return;
+    }
+
+    CuentaBancaria cuenta = cliente.getCuenta();
+    if (cuenta instanceof CuentaCorriente) {
+        System.out.println("Esta cuenta no genera intereses.");
+        return;
+    }
+
+    double interes = cuenta.calcularInteres();
+    System.out.println("Interés simulado para el saldo actual: " + interes + " pesos.");
+}
+
 }
